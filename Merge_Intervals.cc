@@ -12,7 +12,7 @@ struct Interval {
 };
 
 bool comp(Interval const &x, Interval const &y) {
-    return ((x.start < y.start) || (x.start== y.start && x.end<=y.end));
+    return x.start<y.start;
 }
 
 class Solution {
@@ -32,10 +32,10 @@ class Solution {
                 else {
                     if(intervals[i].end > top.end) {
                         top.end = intervals[i].end;
-                        results.pop_back();
-                        results.push_back(top);
+                        results.back().end=intervals[i].end;
                     }
                 }
+                cout << results.back().start << " " << results.back().end<<endl;
             }
             return results;
         }
