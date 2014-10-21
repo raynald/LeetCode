@@ -1,5 +1,6 @@
-#Hard Problem#
+##Hard Problem##
 ========
+
 *Find median of two sorted arrays*
 
 *Merge Intervals* **run time error: sort judge function**
@@ -9,3 +10,6 @@
 *3Sum***Duplicates detection**
 
 *LRUCache***hash_map mit double linklist**
+=======
+*Maximal Rectangle* 
+
