@@ -12,5 +12,7 @@
 *LRUCache***hash_map mit double linklist**
 
 =======
-*Maximal Rectangle* 
+*Maximal Rectangle* : DP + stack
+
+*Simplify_Path*: tricky
 
