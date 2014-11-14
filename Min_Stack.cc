@@ -1,6 +1,7 @@
-//Strange problem
+//Good problem
 //I tried vector instead of stack, returns MLE
 //I tried double linked-list, with a pointer min points to min node, but still MLE
+//Learned: pointer can waste a lot of momery, also vector. 
 class MinStack {
 private:
     stack<int> st;
