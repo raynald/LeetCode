@@ -4,71 +4,41 @@ private:
     string ans;
     vector<string> name;
 public:
-    void search(int x, int y) {
-        int i, j;
-        bool flag;
-        string tmp;
-        for(i=y;p[i]=='/' && i<p.length();i++);
-        flag = 0;
-        for(j=i+1;j<p.length();j++)
-            if(p[j]=='/') {flag = 1;break;}
-        if(!flag) {
-            if(i<p.length()) tmp = p.substr(i); else tmp="";
-            if(tmp==".") {
-                for(int w=0;w<x;w++) 
-                    if(w<name.size()) ans+="/"+name[w]; 
-                if(ans=="") ans="/";
-            }
-            else if(tmp=="..") {
-                for(int w=0;w<x-1;w++) 
-                    if(w<name.size()) ans+="/"+name[w]; 
-                if(ans=="") ans="/";
-            }
-            else {
-                if(i<p.length()) {
-                    if(name.size()>x) name[x]=p.substr(i,j-i);
-                    else {
-                        name.push_back(p.substr(i,j-i));
-                    }
-                }
-                else x--;
-                for(int w=0;w<=x;w++)
-                    if(w<name.size()) ans+="/"+name[w];
-                if(ans=="") ans="/";
-            }
+    int fetch(int x) {
+        for(int i=x;i<p.length();i++) {
+            if(p[i]=='/') return i;
         }
-        else {
-            if(p[i]=='.' && j==i+1) search(x,j);
-            else if(p[i]=='.' && p[i+1]=='.' && j==i+2) if(x>1) search(x-1, i+2); else search(0,i+2);
-            else {
-                if(name.size()>x) name[x]=p.substr(i,j-i);
-                else {
-                    name.push_back(p.substr(i,j-i));
-                }
-                search(x+1, j);
-            }
-        }
+        return -1;
     }
-    
     string simplifyPath(string path) {
-        p = path;
-        ans="";
+        int i;
+        int loc;
+        string tmp;
+        
+        p = path + "/";
+        i = 0;
         name.clear();
-        search(0, 0);
+        while(i<p.length()) {
+            if(p[i]=='/') {
+                i++;
+                continue;
+            }
+            loc = fetch(i);
+            if(loc==-1) break;
+            tmp = path.substr(i, loc-i);
+            if(tmp==".." && !name.empty()) name.pop_back();
+            if(tmp !=".." && tmp!="." && tmp.length()>0) {
+                name.push_back(tmp);
+            }
+            i = loc+1;
+        }
+        ans = "";
+        while(!name.empty()) {
+            ans = "/" + name.back() + ans;
+            name.pop_back();
+        }
+        if(ans=="") ans = "/";
         return ans;
     }
 };
 
-int main() {
-    Solution sol;
-    cout << sol.simplifyPath("///")<<endl;
-    cout << sol.simplifyPath("/home//foo/")<<endl;
-    cout << sol.simplifyPath("/a/./b/../../c/")<<endl;
-    cout << sol.simplifyPath("/.")<<endl;
-    cout << sol.simplifyPath("/..")<<endl;
-    cout << sol.simplifyPath("/.../")<<endl;
-    cout << sol.simplifyPath("/a/../../")<<endl;
-    cout << sol.simplifyPath("/a/./b/../../c/")<<endl;
-    cout << sol.simplifyPath("/home/of/foo/../../bar/../../is/./here/.")<<endl;
-    return 0;
-}
